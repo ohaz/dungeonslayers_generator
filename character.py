@@ -3,6 +3,7 @@ import copy
 import crace
 import cclass
 import os
+import cequipment
 
 
 class Character:
@@ -47,6 +48,8 @@ class Character:
 
         self.klasse = None
         self.volk = None
+        self.money = None
+        self.equipment = None
 
     def generate_attribute(self):
         punkte = 20
@@ -91,6 +94,9 @@ class Character:
     def generate_talent(self):
         self.klasse.generate_talent()
 
+    def generate_equipment(self):
+        self.equipment, self.money = cequipment.generate_equipment()
+
     def __str__(self):
         result = 'Volk: {} - Klasse: {} --- '.format(self.volk, self.klasse)
         for key, value in self.attribute.items():
@@ -108,5 +114,10 @@ class Character:
         if self.klasse and self.klasse.talent:
             result += os.linesep
             result += self.klasse.talent
+        if self.money:
+            result += os.linesep
+            result += str(self.money)
+            result += os.linesep
+            result += str(self.equipment)
         result += os.linesep + '-------------------------------------------------'
         return result
